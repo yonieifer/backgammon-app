@@ -4,7 +4,7 @@ export type RoomType = {
     id: string;
     status: "waiting" | "playing" | "finished";
     ownerSocketId: string;
-    players: [{ socketId: string; name: string; color: ColorType }];
+    players: { socketId: string; name: string; color: ColorType }[];
     game: GameStateType;
     rematchAcceptedBy: ColorType[];
 };
@@ -22,4 +22,4 @@ export type GameStateType = {
 
 export type PointType = { owner: null | ColorType; checkers: number };
 
-export type MoveType = { from: number | "bar"; to: number | "off" };
+export type MoveType = { from: number | "bar"; to: number | "off"; die: number };
