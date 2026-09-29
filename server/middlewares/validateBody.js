@@ -1,3 +1,4 @@
 export default (schema) => (req, res, next) => {
-    const result = schema.pasre(req.body)
+    schema.parse(req.body)
+    next()
 }

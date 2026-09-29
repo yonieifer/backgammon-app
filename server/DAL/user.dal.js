@@ -1,12 +1,12 @@
-import { User } from "../models/user.model";
+import { User } from "../models/user.model.js";
 
 export const createUser = async (user) => {
-    const newUser = User.create(user)
-    return user
+    const newUser = await User.create(user)
+    return newUser
 }
 
 export const getUserByEmail = async (email) => {
-    const user = await User.find({email})
+    const user = await User.findOne({email})
     return user
 }
 
