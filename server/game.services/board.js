@@ -1,7 +1,6 @@
-import type { ColorType, PointType } from "../types.js";
 
 export const initialBoard = () => {
-    const board: PointType[] = Array.from({ length: 24 }, () => ({
+    const board = Array.from({ length: 24 }, () => ({
         owner: null,
         checkers: 0,
     }));

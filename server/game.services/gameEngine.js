@@ -1,6 +1,5 @@
 import { Chance } from "chance";
 import { initialBoard, pointToIndex } from "./board.js";
-import type { ColorType, GameStateType, MoveType } from "../types.js";
 
 export const createGameState = () => ({
     board: initialBoard(),
@@ -20,7 +19,7 @@ const rollDice = () => {
 };
 
 const makeMove = (move: MoveType, state: GameStateType, color: ColorType) => {
-    const board = { ...state.board };
+    const board =  [...state.board ];
     const remainingDice = [...state.remainingDice];
     const bar = { ...state.bar };
     const borneOff = { ...state.borneOff };
