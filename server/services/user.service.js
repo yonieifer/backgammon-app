@@ -1,15 +1,31 @@
 import bcrypt from "bcryptjs"
 import { createUser, getUserByEmail } from "../DAL/user.dal.js"
 import generateToken from "../utils/generateToken.js"
+import { email } from "zod"
 
-export const registerUser = async ({email, password, username}) => {
+export const registerUser = async ({ email, password, username }) => {
     const userExists = await getUserByEmail(email)
     if (userExists) {
-        throw Object.assign(new Error(`user ${email} already exists`), {status: 409})
+        throw Object.assign(new Error(`User ${email} already exists`), { status: 409 })
     }
 
     const hashedPassword = await bcrypt.hash(password, 12)
-    const user = await createUser({username, email, hashedPassword})
+    const user = await createUser({ username, email, hashedPassword })
+    const token = generateToken(username, email)
+    return { user, token }
+}
+
+export const userLogin = async ({ email, password, username }) => {
+    const user = await getUserByEmail(email)
+    if (!user) {
+        throw Object.assign(new Error(`User ${email} not registered`), { status: 400 })
+    }
+
+    const isCorrectPassword = await bcrypt.compare(password, user.hashedPassword)
+    if (!isCorrectPassword) {
+        throw Object.assign(new Error(`Incorrect password`), { status: 400 })
+    }
+
     const token = generateToken(username, email)
     return {user, token}
 }
