@@ -13,7 +13,7 @@ export default (req, res, next) => {
         return res.status(401).json({ success: false, message: "Token missing" });
     }
 
-    const user = jwt.verify(token, JWT_SECRET);
+    const user = jwt.verify(token, process.env.JWT_SECRET);
     req.user = user;
 
     next();
