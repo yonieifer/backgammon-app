@@ -27,5 +27,10 @@ export const userLogin = async ({ email, password, username }) => {
     }
 
     const token = generateToken(username, email)
-    return {user, token}
+    return { user, token }
+}
+
+export const getUser = async ({ username, email }) => {
+    const user = await getUserByEmail(email)
+    return user
 }
