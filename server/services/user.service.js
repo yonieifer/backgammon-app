@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs"
 import { createUser, getUserByEmail } from "../DAL/user.dal.js"
 import generateToken from "../utils/generateToken.js"
-import { email } from "zod"
 
 export const registerUser = async ({ email, password, username }) => {
     const userExists = await getUserByEmail(email)
@@ -32,5 +31,8 @@ export const userLogin = async ({ email, password, username }) => {
 
 export const getUser = async ({ username, email }) => {
     const user = await getUserByEmail(email)
+    if (!user) {
+        throw Object.assign(new Error(`User ${email} not found`), { status: 404 })
+    }
     return user
 }
