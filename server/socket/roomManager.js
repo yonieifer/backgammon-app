@@ -1,15 +1,15 @@
-import { createGameState } from "../game/gameEngine"
+import { createGameState } from "../game/gameEngine.js"
 
 const roomsDB = new Map()
 
-export const createRoom = (user) => {
+export const createRoom = (user, userId) => {
     const roomId = randomUUID()
     const room = {
         id: roomId,
         status: "waiting",
         players: [
             {
-                userId: user.id,
+                userId: userId,
                 username: user.username,
                 color: "white"
             },
@@ -25,7 +25,9 @@ export const getRoom = (roomId) => {
     return room
 }
 
-export const updateRoom = () => {}
+export const updateRoom = (updatedRoom) => {
+    roomsDB[updatedRoom.id] = updatedRoom
+}
 
 export const deleteRoom = (roomId) => {
     roomsDB.delete(roomId)

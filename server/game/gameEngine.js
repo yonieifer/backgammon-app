@@ -18,8 +18,20 @@ const rollDice = () => {
     return dice;
 };
 
-const makeMove = (move: MoveType, state: GameStateType, color: ColorType) => {
-    const board =  [...state.board ];
+export const startGame = (gameState) => {
+    let whiteDice = null
+    let blackDice = null
+    while (blackDice === whiteDice) {
+        whiteDice = rollDice()
+        blackDice = rollDice()
+    }
+    gameState.currentPlayer = whiteDice > blackDice ? "white" : "black"
+    gameState.dice = [whiteDice, blackDice]
+    gameState.status = "waiting-for-move"
+}
+
+const makeMove = (move, state, color) => {
+    const board = [...state.board];
     const remainingDice = [...state.remainingDice];
     const bar = { ...state.bar };
     const borneOff = { ...state.borneOff };
@@ -31,7 +43,7 @@ const makeMove = (move: MoveType, state: GameStateType, color: ColorType) => {
         bar[color] -= 1;
     } else {
         const fromIdx = pointToIndex(move.from, color);
-        const fromPoint = { ...board[fromIdx]! };
+        const fromPoint = { ...board[fromIdx] };
         fromPoint.checkers -= 1;
         if (fromPoint.checkers === 0) {
             fromPoint.owner = null;
@@ -43,7 +55,7 @@ const makeMove = (move: MoveType, state: GameStateType, color: ColorType) => {
         borneOff[color] += 1;
     } else {
         const toIdx = pointToIndex(move.to, color);
-        const toPoint = { ...board[toIdx]! };
+        const toPoint = { ...board[toIdx] };
         if (toPoint.owner !== color && toPoint.owner !== null) {
             bar[toPoint.owner] += 1;
             toPoint.owner = color;
