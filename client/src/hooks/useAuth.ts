@@ -2,8 +2,12 @@ import { useState } from "react";
 import axios, { AxiosError } from "axios";
 import useAuthStore from "../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
+import api from "../utils/api";
 
-interface ServerError { success: boolean, message: string}
+interface ServerError {
+    success: boolean;
+    message: string;
+}
 
 function useAuth() {
     const [error, setError] = useState<string | null>(null);
@@ -18,12 +22,11 @@ function useAuth() {
         password: string,
     ) => {
         setIsLoading(true);
-        axios
-            .post(import.meta.env.VITE_API_URL + `/${action}`, {
-                username,
-                email,
-                password,
-            })
+        api.post(`/${action}`, {
+            username,
+            email,
+            password,
+        })
             .then((data) => login(data.data))
             .then(() => navigate(`/lobby`))
             .catch((err: AxiosError<ServerError>) =>
