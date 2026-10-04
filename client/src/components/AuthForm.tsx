@@ -26,18 +26,21 @@ function AuthForm({ action, sendForm }: AuthFormProps) {
                 type="email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
+                    placeholder="email"
                 required
             />
             <input
                 type="text"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
+                placeholder="password"
                 required
             />
             <input
                 type="text"
                 onChange={(e) => setUsername(e.target.value)}
                 value={username}
+                placeholder="username"
                 required
             />
             <button type="submit">{action}</button>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import useAuthStore from "../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import api from "../utils/api";
@@ -27,11 +27,22 @@ function useAuth() {
             email,
             password,
         })
-            .then((data) => login(data.data))
-            .then(() => navigate(`/lobby`))
-            .catch((err: AxiosError<ServerError>) =>
-                setError(err.response?.data?.message || err.message),
-            )
+            .then((res) => {                
+                login(res.data.data);
+                navigate(`/lobby`);
+            })
+            .catch((err: AxiosError<ServerError>) => {
+                const msg =
+                    err.response?.data?.message ||
+                    err.response?.data ||
+                    err.message;
+                if (typeof msg === "string") {
+                    setError(msg);
+                } else {
+                    setError("server internal error");
+                    console.log(msg);
+                }
+            })
             .finally(() => setIsLoading(false));
     };
 

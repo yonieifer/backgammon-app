@@ -7,13 +7,14 @@ interface ServerError {
     message: string;
 }
 
-type User = {username: string,
-    email: string,
-    wins: number,
-    losses:number,
-    createdAt: string,
-    updatedAt: string
-}
+type User = {
+    username: string;
+    email: string;
+    wins: number;
+    losses: number;
+    createdAt: string;
+    updatedAt: string;
+};
 
 function useProfile() {
     const [data, setData] = useState<User | null>(null);
@@ -23,14 +24,22 @@ function useProfile() {
     useEffect(() => {
         setIsLoading(true);
         api.get("/user-profile")
-            .then((data) => setData(data.data))
-            .catch((err: AxiosError<ServerError>) =>
-                setError(err.response?.data?.message || err.message),
-            )
+            .then((res) => setData(res.data.data))
+            .catch((err: AxiosError<ServerError>) => {
+                const msg =
+                    err.response?.data?.message ||
+                    err.response?.data ||
+                    err.message;
+                if (typeof msg === "string") setError(msg);
+                else {
+                    setError("server internal error");
+                    console.log(msg);
+                }
+            })
             .finally(() => setIsLoading(false));
     }, []);
 
-    return {data, error, isLoading};
+    return { data, error, isLoading };
 }
 
 export default useProfile;

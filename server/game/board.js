@@ -17,19 +17,19 @@ export const initialBoard = () => {
     return board;
 };
 
-export function pointToIndex(point:number, color: ColorType) {
+export function pointToIndex(point, color) {
   return color === "white" ? point - 1 : 24 - point;
 }
 
-export function calculateDestination(from: number, die: number, color: ColorType) {
-  return color === "white" ? from - die : from + die;
-}
+// export function calculateDestination(from: number, die: number, color: ColorType) {
+//   return color === "white" ? from - die : from + die;
+// }
 
-export function getBarDestination(die: number, color:ColorType) {
-  return color === "white" ? 24 - die : die - 1;
-}
+// export function getBarDestination(die: number, color:ColorType) {
+//   return color === "white" ? 24 - die : die - 1;
+// }
 
-export function distanceToExit(index: number, color: ColorType) {
-  return color === "white" ? index + 1 : 24 - index;
-}
+// export function distanceToExit(index: number, color: ColorType) {
+//   return color === "white" ? index + 1 : 24 - index;
+// }
 

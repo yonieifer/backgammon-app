@@ -1,6 +1,7 @@
 import http from "http"
 import { Server } from "socket.io";
 import express from "express";
+import cors from "cors"
 import { connectDB } from "./config/db.js"
 import authRouter from "./routes/authRouter.js"
 import errorHandler from "./middlewares/errorHandler.js";
@@ -14,6 +15,7 @@ const io = new Server(httpServer)
 
 await connectDB()
 
+app.use(cors())
 app.use(express.json())
 app.use(authRouter)
 app.use(errorHandler)

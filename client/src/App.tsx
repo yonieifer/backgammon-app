@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes, Router, BrowserRouter } from "react-router-dom";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 import AuthPage from "./pages/AuthPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LobbyPage from "./pages/LobbyPage";
@@ -9,11 +9,13 @@ function App() {
     return (
         <>
             <BrowserRouter>
-                <Route path="/auth" element={<AuthPage />} />
-                <Route element={<ProtectedRoute />}>
-                    <Route path="/lobby" element={<LobbyPage/>}/>
-                    <Route path="/game" element={<GamePage/>}/>
-                </Route>
+                <Routes>
+                    <Route path="/" element={<AuthPage />} />
+                    <Route element={<ProtectedRoute />}>
+                        <Route path="/lobby" element={<LobbyPage />} />
+                        <Route path="/game" element={<GamePage />} />
+                    </Route>
+                </Routes>
             </BrowserRouter>
         </>
     );
