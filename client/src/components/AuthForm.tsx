@@ -2,7 +2,12 @@ import { useState } from "react";
 
 interface AuthFormProps {
     action: "login" | "register";
-    sendForm: (action: "login" | "register", email: string, password: string, username: string) => void;
+    sendForm: (
+        action: "login" | "register",
+        username: string,
+        email: string,
+        password: string,
+    ) => void;
 }
 
 function AuthForm({ action, sendForm }: AuthFormProps) {
@@ -14,7 +19,7 @@ function AuthForm({ action, sendForm }: AuthFormProps) {
         <form
             onSubmit={(e) => {
                 e.preventDefault();
-                sendForm(action, email, username, password);
+                sendForm(action, username, email, password);
             }}
         >
             <input

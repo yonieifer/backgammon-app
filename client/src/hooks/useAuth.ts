@@ -3,6 +3,8 @@ import axios, { AxiosError } from "axios";
 import useAuthStore from "../store/useAuthStore";
 import { useNavigate } from "react-router-dom";
 
+interface ServerError { success: boolean, message: string}
+
 function useAuth() {
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -23,8 +25,8 @@ function useAuth() {
                 password,
             })
             .then((data) => login(data.data))
-            .then(() => navigate(`/${action}`))
-            .catch((err: AxiosError) =>
+            .then(() => navigate(`/lobby`))
+            .catch((err: AxiosError<ServerError>) =>
                 setError(err.response?.data?.message || err.message),
             )
             .finally(() => setIsLoading(false));
